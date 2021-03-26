@@ -25,3 +25,9 @@ View(train)
 # dataframe structure
 
 str(train)
+
+
+# making Table of table survived
+table(train$Survived)
+prop.table(table(train$Survived))
+
