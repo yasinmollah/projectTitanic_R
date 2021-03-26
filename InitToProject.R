@@ -9,11 +9,14 @@
 
 setwd("~/Learning/projectTitanic")
 
+#Amelia Packege Installetion
+install.packages("Amelia")
+library(Amelia)
 # Import the training set: train
 # Your working directory might vary
 
 train <- read.csv("~/Learning/projectTitanic/train.csv")
-
+test<- read.csv("~/Learning/projectTitanic/test.csv")
 # viewing the "train" dataframe in raw format
 
 train
@@ -29,5 +32,33 @@ str(train)
 
 # making Table of table survived
 table(train$Survived)
-prop.table(table(train$Survived))
+prop.table(table(train$Survived))*100
 
+# Manipulating Test Data Set
+table(test$Sex)
+prop.table(table(test$Sex))*100
+test$Survived <- rep(0,418)
+#Submission file ready for first submission
+prediction1 <- data.frame(PassengerId=test$PassengerId, Survived=test$Survived)
+write.csv(prediction1,file = "1stPrediction.csv", row.names = FALSE)
+
+
+#Missing map calculating
+
+missmap(train,main="TitanicTrainingData-MissingMap",col=c("yellow","black"),legend=FALSE)
+
+
+#
+##
+###
+# Making ready for second submission
+summary(train$Sex)
+prop.table(table(train$Sex,train$Survived),1)*100
+
+barplot(table(train$Sex), xlab = "Passenger", ylab = "People", main = "Titanic Data Passenger")
+
+test$Survived<-0
+test$Survived[test$Sex=='female']<-1
+
+prediction2<-data.frame(passengerID=test$PassengerId,Survived=test$Survived)
+write.csv(prediction2,file = "2ndPrediction.csv",row.names = FALSE)
