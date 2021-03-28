@@ -62,3 +62,6 @@ test$Survived[test$Sex=='female']<-1
 
 prediction2<-data.frame(passengerID=test$PassengerId,Survived=test$Survived)
 write.csv(prediction2,file = "2ndPrediction.csv",row.names = FALSE)
+
+
+#Starting the section for third prediction
