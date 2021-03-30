@@ -86,3 +86,23 @@ test$Survived[test$Sex == "female" & test$Pclass==3 & test$Fare>=20]<-0
 #barplot(table(test$Survived))
 
 #Submission File ready for 3rd prediction
+prediction3<-data.frame(test$PassengerId,test$Survived)
+names(prediction3)<-c("passengerID","Survived")
+rownames(prediction3)<-NULL
+write.csv(prediction3,file = "prediction3.csv",row.names = FALSE)
+
+#
+#Getting ready for 4th prediction
+#
+#Installing Packeges
+install.packages("rattle")
+install.packages("rpart.plot")
+install.packages("RColorBrewer")
+
+#Loading Libraries
+library(rpart)
+library(rpart.plot)
+library(rattle)
+library(RColorBrewer)
+
+
