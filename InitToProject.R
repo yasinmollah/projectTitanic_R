@@ -95,14 +95,19 @@ write.csv(prediction3,file = "prediction3.csv",row.names = FALSE)
 #Getting ready for 4th prediction
 #
 #Installing Packeges
-install.packages("rattle")
+install.packages("rattle", repos="https://rattle.togaware.com", type="source")
 install.packages("rpart.plot")
 install.packages("RColorBrewer")
 
 #Loading Libraries
 library(rpart)
-library(rpart.plot)
 library(rattle)
+library(rpart.plot)
 library(RColorBrewer)
 
+#Constructing Decision tree
+mytree1<-rpart(Survived~Pclass+Sex+Age+SibSp+Parch+Fare+Embarked, data = train, method = "class")
 
+fourthPrediction<-predict(mytree1,test,type = "class")
+prediction4<-data.frame(PassengerId=test$PassengerId,Survived=fourthPrediction)
+write.csv(prediction4,file = "Prediction4.csv",row.names = FALSE)
