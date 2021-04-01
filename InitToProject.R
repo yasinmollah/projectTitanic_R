@@ -114,4 +114,60 @@ prediction4<-data.frame(PassengerId=test$PassengerId,Survived=fourthPrediction)
 write.csv(prediction4,file = "Prediction4.csv",row.names = FALSE)
 
 #Starting Scripts for 5th prediction
-View(test)
+
+#Correction: making test datasets column number as like train dataset
+test$Fare2<-"30+"
+test$Fare2[test$Fare<30 & test$Fare>=20]<-"20-30"
+test$Fare2[test$Fare<20 & test$Fare>=10]<-"10-20"
+test$Fare2[test$Fare<10]<-"<10"
+
+#
+#
+#
+test$Survived<-NA
+comboSet<-rbind(train,test)
+
+
+#View(comboSet)
+#barplot(table(comboSet$Survived),xlab = "Survived",ylab = "People",main = "Testing ComboSet Dataset")
+
+#Manipulating Names
+comboSet$Name<-as.character(comboSet$Name)
+#Identifying Maturity
+comboSet$Child[comboSet$Age<14]<-"Child"
+comboSet$Child[comboSet$Age>=14]<-"Adult"
+
+#barplot(table(comboSet$Child,comboSet$Survived))
+comboSet$Child<-factor(comboSet$Child)
+
+#Identifying Mothers
+comboSet$Mother<-'Not Mother'
+comboSet$Mother[comboSet$Sex=="female" & comboSet$Age>18 & comboSet$Parch>0]<-"Mother"
+View(comboSet)
+table(comboSet$Mother, comboSet$Survived)
+comboSet$Mother<-factor(comboSet$Mother)
+
+
+#Finding Title
+strsplit(comboSet$Name[1],split = "[,.]")
+strsplit(comboSet$Name[5],split = "[,.]")[[1]][2]
+
+comboSet$Title<-sapply(comboSet$Name, function(x){strsplit(x,split = "[,.]")[[1]][2]})
+
+barplot(table(comboSet$Title))
+
+comboSet$Title<-sub(" ","",comboSet$Title)
+table(comboSet$Title)
+
+comboSet$Title[comboSet$Title %in% c("Mme","Mlle")]<-"Mlle"
+comboSet$Title[comboSet$Title %in% c("Capt","Don","Major","Sir")]<-"Sir"
+comboSet$Title[comboSet$Title %in% c("Dona","Lady","the Countess","Jonkheer")]<-"Lady"
+
+comboSet$Title<-factor(comboSet$Title)
+
+comboSet$Mother<-"Not Mother"
+comboSet$Mother[comboSet$Sex=="female" & comboSet$Parch>0 & comboSet$Age>18 & comboSet$Title!="Miss"]<-"Mother"
+
+barplot(table(comboSet$Mother,comboSet$Survived))
+
+prop.table(table(comboSet$Mother,comboSet$Survived),1)*100
