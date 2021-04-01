@@ -24,6 +24,7 @@ train
 # viewing the "train" dataframe in table format
 
 View(train)
+View(test)
 
 # dataframe structure
 
@@ -45,7 +46,7 @@ write.csv(prediction1,file = "1stPrediction.csv", row.names = FALSE)
 
 #Missing map calculating
 
-missmap(train,main="TitanicTrainingData-MissingMap",col=c("yellow","black"),legend=FALSE)
+missmap(train,main="TitanicTrainingData-MissingMap",col=c("orange","black"),legend=FALSE)
 
 
 #
@@ -111,3 +112,6 @@ mytree1<-rpart(Survived~Pclass+Sex+Age+SibSp+Parch+Fare+Embarked, data = train, 
 fourthPrediction<-predict(mytree1,test,type = "class")
 prediction4<-data.frame(PassengerId=test$PassengerId,Survived=fourthPrediction)
 write.csv(prediction4,file = "Prediction4.csv",row.names = FALSE)
+
+#Starting Scripts for 5th prediction
+View(test)
