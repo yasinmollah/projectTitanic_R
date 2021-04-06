@@ -170,6 +170,8 @@ comboSet$Mother[comboSet$Sex=="female" & comboSet$Parch>0 & comboSet$Age>18 & co
 
 barplot(table(comboSet$Mother,comboSet$Survived))
 
+
+
 prop.table(table(comboSet$Mother,comboSet$Survived),1)*100
 
 
